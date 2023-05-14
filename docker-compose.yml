@@ -1,0 +1,23 @@
+version: '3.8'
+
+networks:
+  petnet:
+    driver: ${APP_NETWORK_DRIVER}
+
+services:
+  postgres:
+    platform: ${PLATFORM}
+    image: ${POSTGRES_IMAGE}
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_ACCESSKEY}
+      - POSTGRES_PASSWORD=${POSTGRES_SECRET}
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/postgres.conf:/etc/postgresql/postgres.conf
+    ports:
+      - "${POSTGRES_HOST_PORT}:5432"
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgres.conf"]
+    networks:
+      - petnet

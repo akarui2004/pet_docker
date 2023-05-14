@@ -1,2 +1,2 @@
-# pet_docker
+# Pet Docker
 This is a PET docker for my PET project
