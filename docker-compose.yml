@@ -14,11 +14,10 @@ services:
       - POSTGRES_USER=${POSTGRES_ACCESSKEY}
       - POSTGRES_PASSWORD=${POSTGRES_SECRET}
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
-      - ./postgres/postgres.conf:/etc/postgresql/postgres.conf
+      - ./volumes/postgres:/var/lib/postgresql/data
+      - ./postgres/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
     ports:
       - "${POSTGRES_HOST_PORT}:5432"
-    command: ["postgres", "-c", "config_file=/etc/postgresql/postgres.conf"]
     networks:
       - petnet
   redis:
@@ -34,4 +33,4 @@ services:
       - REDIS_PORT=${REDIS_PORT}
       - REDIS_DATABASE=${REDIS_DATABASE}
     networks:
-      - localdb
+      - petnet
